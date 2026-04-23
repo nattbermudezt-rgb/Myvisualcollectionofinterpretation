@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cards Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="bg-blobs" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+
+    <main class="presentation" id="presentation">
+      <section class="intro" id="intro">
+        <p class="tag">Final Project Presentation</p>
+        <h1 class="title">
+          <span class="title-line title-line-a">My Visual Collection</span>
+          <span class="title-line title-line-b">of Interpretations</span>
+        </h1>
+        <p class="subtitle">by Natalia Bermudez</p>
+
+        <div class="deck-stage" id="deckStage" aria-hidden="true"></div>
+
+        <button class="btn btn-primary" id="startBtn" type="button">
+          Start presentation
+        </button>
+      </section>
+
+      <section class="gallery-section hidden" id="gallerySection" aria-live="polite">
+        <header class="top-bar">
+          <div>
+            <p class="tag">All cards</p>
+            <h2 class="pair-title">Choose a pair to view in detail</h2>
+          </div>
+          <div class="controls">
+            <button class="btn" id="musicBtnGallery" type="button" aria-pressed="false">Music: Off</button>
+            <button class="btn" id="homeBtnGallery" type="button">Home</button>
+          </div>
+        </header>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </section>
+
+      <section class="pair-section hidden" id="pairSection" aria-live="polite">
+        <header class="top-bar">
+          <div>
+            <p class="tag">Pair <span id="pairCounter">1</span></p>
+            <h2 class="pair-title" id="pairTitle">Pair title</h2>
+          </div>
+
+          <div class="controls">
+            <button class="btn" id="musicBtn" type="button" aria-pressed="false">
+              Music: Off
+            </button>
+            <button class="btn" id="zoomBtn" type="button">Pair zoom</button>
+          </div>
+        </header>
+
+        <div class="pair-view" id="pairView">
+          <article class="card-pane" id="cardOriginalPane">
+            <p class="pane-label">Original interpretation</p>
+            <button class="card-shell" id="cardOriginal" type="button" aria-label="Open original card in zoom">
+              <img src="" alt="Original card" />
+            </button>
+          </article>
+
+          <article class="card-pane" id="cardNewPane">
+            <p class="pane-label">New visual interpretation</p>
+            <button class="card-shell" id="cardNew" type="button" aria-label="Open new card in zoom">
+              <img src="" alt="New card" />
+            </button>
+          </article>
+        </div>
+
+        <footer class="nav-bar">
+          <button class="btn" id="homeBtnPair" type="button">Home</button>
+          <button class="btn" id="backBtn" type="button">&#8592; Gallery</button>
+          <button class="btn" id="prevBtn" type="button">Previous</button>
+          <button class="btn btn-primary" id="nextBtn" type="button">Next</button>
+        </footer>
+      </section>
+    </main>
+
+    <div class="zoom-modal hidden" id="zoomModal" role="dialog" aria-modal="true" aria-labelledby="zoomTitle">
+      <div class="zoom-panel">
+        <header class="zoom-header">
+          <h3 id="zoomTitle">Pair zoom</h3>
+          <button class="btn" id="closeZoomBtn" type="button">Close</button>
+        </header>
+
+        <div class="zoom-grid">
+          <figure class="flip-card" id="zoomCard1">
+            <div class="flip-inner">
+              <div class="flip-face flip-front-face">
+                <img id="zoomBackImg1" src="" alt="Back original" />
+              </div>
+              <div class="flip-face flip-back-face">
+                <img id="zoomOriginal" src="" alt="Original interpretation" />
+              </div>
+            </div>
+            <figcaption>Original interpretation <span class="flip-hint">&#8635; tap to flip</span></figcaption>
+          </figure>
+          <figure class="flip-card" id="zoomCard2">
+            <div class="flip-inner">
+              <div class="flip-face flip-front-face">
+                <img id="zoomBackImg2" src="" alt="Back new interpretation" />
+              </div>
+              <div class="flip-face flip-back-face">
+                <img id="zoomNew" src="" alt="New visual interpretation" />
+              </div>
+            </div>
+            <figcaption>New visual interpretation <span class="flip-hint">&#8635; tap to flip</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bgAudio" loop preload="auto" aria-hidden="true">
+      <source src="assets/audio/Florian Christl - Natural.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="js/main.js"></script>
+  </body>
+</html>
