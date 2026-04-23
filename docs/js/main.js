@@ -56,7 +56,7 @@ const pairs = [
     title: "Pair 8",
     back:       "pareja08/cartas_m25.png",
     original:   "pareja08/cartas%23m24.png",
-    reimagined: "pareja08/cartas%23%C3%B126.png",
+    reimagined: "pareja08/cartas%23n26.png",
   },
   {
     title: "Pair 9",
