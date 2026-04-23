@@ -1,0 +1,603 @@
+:root {
+  --bg-deep: #2a0d17;
+  --bg-warm: #ff6e2f;
+  --bg-pink: #ff4f9d;
+  --card-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+  --surface: rgba(255, 255, 255, 0.15);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --ink: #251525;
+  --ink-soft: #6a2d52;
+}
+
+@font-face {
+  font-family: "Fisterra";
+  src: url("../assets/Fonts/Demo_Fonts%202/DEMO-tty-fisterra-fora.otf") format("opentype"),
+    local("Fisterra");
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  color: #fff7f3;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 20% 20%, #ff9a6a 0%, transparent 36%),
+    radial-gradient(circle at 80% 10%, #ff58ad 0%, transparent 32%),
+    radial-gradient(circle at 50% 85%, #ff7f8e 0%, transparent 36%),
+    linear-gradient(120deg, var(--bg-deep), #8a1f53 38%, #d8347f 72%, #ff7b45);
+}
+
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.35;
+  animation: drift 13s ease-in-out infinite alternate;
+}
+
+.blob-a {
+  width: 28vw;
+  height: 28vw;
+  background: #ff6f66;
+  top: -8vw;
+  left: -6vw;
+}
+
+.blob-b {
+  width: 35vw;
+  height: 35vw;
+  background: #ff3da4;
+  bottom: -12vw;
+  right: -10vw;
+  animation-duration: 17s;
+}
+
+.blob-c {
+  width: 20vw;
+  height: 20vw;
+  background: #ffbf86;
+  top: 36vh;
+  right: 30vw;
+  animation-duration: 11s;
+}
+
+.presentation {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 3rem;
+}
+
+.intro,
+.pair-section {
+  height: calc(100vh - 4rem);
+  max-height: 760px;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.08)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 28px 60px rgba(26, 5, 18, 0.45);
+}
+
+.intro {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  justify-items: center;
+  text-align: center;
+  padding: 2.4rem 2rem 2rem;
+}
+
+.tag {
+  margin: 0 0 0.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.title {
+  margin: 0.85rem 0 0;
+  font-family: "Fisterra", "Bebas Neue", sans-serif;
+  font-size: clamp(1.9rem, 4.6vw, 3.7rem);
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  line-height: 1.12;
+  text-transform: none;
+  max-width: 20ch;
+  text-align: center;
+}
+
+.title-line {
+  display: block;
+}
+
+.title-line-b {
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 1rem 0 0;
+  max-width: 800px;
+  font-family: "Fraunces", serif;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  color: #ffefe2;
+}
+
+.deck-stage {
+  position: relative;
+  width: min(92vw, 1100px);
+  height: min(48vh, 360px);
+  margin-top: 1.8rem;
+  perspective: 1200px;
+}
+
+.intro .btn-primary {
+  margin-top: 0.6rem;
+}
+
+.deck-card {
+  --x: 0;
+  --y: 0;
+  --r: 0deg;
+  --delay: 0s;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(92px, 8vw, 132px);
+  aspect-ratio: 5 / 7;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 230, 216, 0.9);
+  box-shadow: 0 14px 28px rgba(20, 6, 13, 0.22);
+  background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 240, 230, 0.24) 0 8px,
+      rgba(255, 166, 140, 0.22) 8px 16px
+    ),
+    linear-gradient(145deg, #9f2049, #f95e38);
+  transform: translate(-50%, -50%) rotate(0deg) scale(0.98);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s ease;
+  transition-delay: var(--delay);
+}
+
+.deck-card::after {
+  content: "\2666";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  color: rgba(255, 245, 242, 0.85);
+}
+
+.deck-stage.scattered .deck-card {
+  transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--r))
+    scale(1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.72rem 1.3rem;
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #31152d;
+  background: var(--surface-strong);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.14);
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, #ffe3c6, #fff8ef);
+}
+
+.pair-section {
+  padding: 1.2rem 1.2rem 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.8rem;
+}
+
+.top-bar,
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.pair-title {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+}
+
+.pair-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  min-height: 0;
+  transform-origin: center;
+}
+
+/* single-card mode: center the one visible card at full pair width */
+.pair-view:has(> article[style*="visibility: hidden"]),
+.pair-view:has(> article[style*="visibility:hidden"]) {
+  grid-template-columns: minmax(0, 420px);
+  justify-content: center;
+}
+
+/* let aspect-ratio control height in single-card mode */
+.pair-view:has(> article[style*="visibility: hidden"]) .card-pane,
+.pair-view:has(> article[style*="visibility:hidden"]) .card-pane {
+  align-self: start;
+}
+
+.pair-view:has(> article[style*="visibility: hidden"]) .card-shell,
+.pair-view:has(> article[style*="visibility:hidden"]) .card-shell {
+  height: auto;
+}
+
+.pair-view.turning {
+  animation: pageTurn 0.7s ease;
+}
+
+.card-pane {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.5rem;
+}
+
+.pane-label {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #fff0e2;
+}
+
+.card-shell {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  aspect-ratio: 7 / 9.8;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  overflow: hidden;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.16);
+  cursor: zoom-in;
+  box-shadow: var(--card-shadow);
+}
+
+.card-shell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: rgba(16, 7, 17, 0.7);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.zoom-panel {
+  width: min(1200px, 95vw);
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 20px;
+  background: linear-gradient(140deg, #fff7eb, #ffd8be);
+  color: var(--ink);
+  padding: 1rem;
+}
+
+.zoom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.zoom-header h3 {
+  margin: 0;
+}
+
+@keyframes pageTurn {
+  0% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  35% {
+    transform: perspective(1000px) rotateY(-18deg) scale(0.98);
+    opacity: 0.4;
+  }
+  100% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.8vw, -2.3vh, 0) scale(1.08);
+  }
+}
+
+@media (max-width: 1000px) {
+  body {
+    overflow: auto;
+  }
+
+  .presentation {
+    padding: 1rem;
+  }
+
+  .intro,
+  .pair-section {
+    height: auto;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .pair-view,
+  .zoom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar,
+  .nav-bar {
+    flex-wrap: wrap;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .gallery-section {
+    height: auto;
+    min-height: calc(100vh - 2rem);
+    max-height: none;
+  }
+}
+
+/* ── GALLERY ────────────────────────────────────────────── */
+
+.gallery-section {
+  height: calc(100vh - 4rem);
+  max-height: 760px;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.08)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 28px 60px rgba(26, 5, 18, 0.45);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  overflow: hidden;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.65rem;
+  overflow-y: auto;
+  padding: 0.4rem 0.2rem 0.6rem;
+  align-content: start;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 180, 140, 0.4) transparent;
+}
+
+@media (max-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gallery-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  padding: 0.35rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
+  border-color: rgba(255, 220, 190, 0.55);
+}
+
+/* Contenedor del back con numero superpuesto */
+.gallery-back-wrap {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 5 / 7;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-back-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+.gallery-pair-num {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.5rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.4rem;
+  color: rgba(255, 245, 242, 0.95);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  line-height: 1;
+}
+
+.gallery-item-label {
+  margin: 0;
+  font-size: 0.7rem;
+  text-align: center;
+  color: #ffe8d8;
+  line-height: 1.3;
+}
+
+/* ── ZOOM — dos cartas siempre juntas ───────────────────── */
+.zoom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+
+/* single-card mode: center the one visible card */
+.zoom-grid:has(> figure[style*="display: none"]),
+.zoom-grid:has(> figure[style*="display:none"]) {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.zoom-grid figure {
+  margin: 0;
+  width: min(100%, 320px);
+  justify-self: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.zoom-grid figcaption {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.zoom-grid img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── Flip card 3D ─────────────────────────────────────────── */
+.flip-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  user-select: none;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flip-card.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back-face {
+  transform: rotateY(180deg);
+}
+
+.flip-hint {
+  font-size: 0.75rem;
+  opacity: 0.65;
+  font-family: "Fisterra", "Fraunces", serif;
+  font-weight: 400;
+  margin-left: 0.35rem;
+}
